@@ -29,16 +29,29 @@ impl TodoList {
         return id;
     }
 
+    pub fn remove_item(&mut self, id: u32) {
+        if let Some(index) = self.find_index_of(id) {
+            self.items.remove(index);
+        }
+    }
+
     pub fn get_item(&self, idx: usize) -> Option<&Todo> {
         self.items.get(idx)
     }
 
     pub fn get_item_by_id(&self, id: u32) -> Option<&Todo> {
+        match self.find_index_of(id) {
+            Some(index) => self.items.get(index),
+            None => None
+        }
+    }
+
+    fn find_index_of(&self, id: u32) -> Option<usize> {
         for idx in 0..self.items.len() {
             let item_option = self.items.get(idx);
             if let Some(item) = item_option {
                 if item.id == id {
-                    return item_option;
+                    return Some(idx);
                 }
             }
         }

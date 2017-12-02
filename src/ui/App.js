@@ -12,7 +12,7 @@ import TodoList from './TodoList';
 class AppImpl extends React.Component {
 
   render() {
-    const {items, onNewTodo} = this.props;
+    const {items, onNewTodo, onRemoveTodo} = this.props;
 
     const handleAdd = () => {
       onNewTodo(this.newTodoMessage.value);
@@ -22,7 +22,7 @@ class AppImpl extends React.Component {
       <div style={{textAlign: 'center'}}>
         <h1>To-Dos</h1>
         <Grid><Row><Col md={6}>
-        <TodoList items={items}/>
+        <TodoList items={items} onRemove={onRemoveTodo}/>
         </Col></Row>
           <Row><Col md={6}><InputGroup>
             <FormControl type="text" inputRef={e => {this.newTodoMessage = e;}}/>
@@ -35,7 +35,8 @@ class AppImpl extends React.Component {
 
 AppImpl.propTypes = {
   items: PropTypes.array.isRequired,
-  onNewTodo: PropTypes.func.isRequired
+  onNewTodo: PropTypes.func.isRequired,
+  onRemoveTodo: PropTypes.func.isRequired
 };
 
 export default class App extends React.Component {
@@ -55,7 +56,11 @@ export default class App extends React.Component {
       list.addItem(msg);
       this.setState({items:App.createItemsList(list)})
     };
-    return <AppImpl onNewTodo={handleNewTodo} items={this.state.items}/>;
+    const handleRemoveTodo = (id) => {
+      list.removeItem(id);
+      this.setState({items:App.createItemsList(list)})
+    };
+    return <AppImpl onNewTodo={handleNewTodo} items={this.state.items} onRemoveTodo={handleRemoveTodo}/>;
   }
 
   static createItemsList(list) {

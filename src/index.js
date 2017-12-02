@@ -6,6 +6,7 @@ wasm.initialize({noExitRuntime: true}).then(function(module) {
   // Create a Javascript wrapper around our Rust function
   const create_list         = module.cwrap('create_list',         'number', []);
   const add_item            = module.cwrap('add_item',            'number', ['number', 'string']);
+  const remove_item         = module.cwrap('remove_item',         'number', ['number', 'number']);
   const list_length         = module.cwrap('list_length',         'number', ['number']);
   const get_item_id         = module.cwrap('get_item_id',         'number', ['number', 'number']);
   const get_item_completed  = module.cwrap('get_item_completed',  'number', ['number', 'number']);
@@ -14,15 +15,16 @@ wasm.initialize({noExitRuntime: true}).then(function(module) {
 
   let list = create_list();
 
-  ReactDOM.render(<App list={new TodoListWrapper(list, add_item, list_length, get_item_id, get_item_completed, get_item_msg)}
+  ReactDOM.render(<App list={new TodoListWrapper(list, add_item, remove_item, list_length, get_item_id, get_item_completed, get_item_msg)}
                        onDestroy={() => destroy_list(list)}
   />, document.getElementById('container'));
 });
 
 class TodoListWrapper {
-  constructor(list_ptr, add_item, list_length, get_item_id, get_item_completed, get_item_msg) {
+  constructor(list_ptr, add_item, remove_item, list_length, get_item_id, get_item_completed, get_item_msg) {
     this.list = list_ptr;
     this.add_item = add_item;
+    this.remove_item = remove_item;
     this.list_length = list_length;
     this.get_item_id = get_item_id;
     this.get_item_completed = get_item_completed;
@@ -31,6 +33,10 @@ class TodoListWrapper {
 
   addItem(msg) {
     this.add_item(this.list, msg);
+  }
+
+  removeItem(id) {
+    this.remove_item(this.list, id);
   }
 
   getItem(index) {

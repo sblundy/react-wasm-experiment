@@ -17,10 +17,16 @@ pub extern "C" fn create_list() -> *mut TodoList {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn add_item(ptr: *mut TodoList, c_msg: *mut c_char) -> u32 {
+pub unsafe extern "C" fn add_item(ptr: *mut TodoList, c_msg: *mut c_char) -> i32 {
     let list = &mut *ptr;
     let msg = CStr::from_ptr(c_msg).to_string_lossy().into_owned();
-    return list.add_item(msg);
+    return list.add_item(msg) as i32;
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn remove_item(ptr: *mut TodoList, id: i32) {
+    let list = &mut *ptr;
+    list.remove_item(id as u32);
 }
 
 #[no_mangle]
