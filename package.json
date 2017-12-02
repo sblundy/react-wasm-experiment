@@ -1,0 +1,28 @@
+{
+  "name": "react-wasm",
+  "version": "0.0.1",
+  "description": "React/WebAssembly Experiment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "webpack --progress",
+    "serve": "http-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "3.8.1",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "prop-types": "15.6.0",
+    "react-bootstrap": "0.31.5"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "rust-wasm-loader": "0.1.2",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "http-server": "0.10.0"
+  }
+}
