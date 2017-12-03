@@ -4,11 +4,11 @@
   "description": "React/WebAssembly Experiment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cargo test",
     "compile": "webpack --progress",
     "serve": "http-server"
   },
-  "author": "",
+  "author": "el_gonzzo@hotmail.com",
   "license": "ISC",
   "dependencies": {
     "webpack": "3.8.1",
