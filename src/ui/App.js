@@ -1,12 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/lib/Button';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import TodoList from './TodoList';
 
 class AppImpl extends React.Component {
@@ -19,16 +12,23 @@ class AppImpl extends React.Component {
     };
 
     return (
-      <div style={{textAlign: 'center'}}>
-        <h1>To-Dos</h1>
-        <Grid><Row><Col md={6}>
-        <TodoList items={items} onRemove={onRemoveTodo}/>
-        </Col></Row>
-          <Row><Col md={6}><InputGroup>
-            <FormControl type="text" inputRef={e => {this.newTodoMessage = e;}}/>
-            <InputGroup.Button><Button onClick={handleAdd}><Glyphicon glyph="plus" /></Button></InputGroup.Button>
-          </InputGroup></Col></Row>
-        </Grid>
+      <div className="container">
+        <h1 className="row">To-Dos</h1>
+        <div className="row">
+          <div className="col-md-6">
+            <TodoList items={items} onRemove={onRemoveTodo}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="input-group">
+              <input type="text" className="form-control" aria-label="Description for new ToDo" ref={e => {this.newTodoMessage = e;}}/>
+              <span className="input-group-btn">
+                <button className="btn btn-secondary" type="button" onClick={handleAdd}><i className="fa fa-plus" aria-hidden="true"/></button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>);
   }
 }

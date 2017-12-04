@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Table from 'react-bootstrap/lib/Table';
-import Checkbox from 'react-bootstrap/lib/Checkbox';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const Row = ({id, completed, message, onRemove}) => <tr>
-  <td><Button onClick={() => onRemove(id)}><Glyphicon glyph="trash"/></Button></td>
-  <td><Checkbox checked={completed} readOnly/></td>
+  <td><a href="javascript:void(0)" onClick={() => onRemove(id)}><i className="fa fa-trash" aria-hidden="true"/></a></td>
+  <td><input type="checkbox" value="" checked={completed} readOnly/></td>
   <td>{message}</td>
 </tr>;
 
@@ -15,9 +11,10 @@ export default class TodoList extends React.Component {
   render() {
     const {items, onRemove} = this.props;
     let rows = items.map(({id, completed, message}) => <Row key={id} id={id} completed={completed} message={message} onRemove={onRemove}/>);
-    return <Table condensed>
+    return <table className="table table-sm">
       <thead>
       <tr>
+        <th><i className="fa fa-trash invisible" aria-hidden="true"/></th>
         <th>Completed</th>
         <th>Description</th>
       </tr>
@@ -25,7 +22,7 @@ export default class TodoList extends React.Component {
       <tbody>
         {rows}
       </tbody>
-    </Table>;
+    </table>;
   }
 }
 
